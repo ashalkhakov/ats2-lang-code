@@ -1,0 +1,100 @@
+######
+#
+# HX-2013-03: for compiling a distribution of ATS-Postiats
+#
+######
+
+all:: bin2_patsopt
+
+######
+
+all:: bin_patscc
+all:: ccomp/atslib/lib/libatslib.a
+
+######
+
+src_patsopt: ; make -C src patsopt
+bin_patsopt: src_patsopt ; cp -f src/patsopt bin/patsopt
+
+######
+
+src2_patsopt: ; make -C src/CBOOT patsopt
+bin2_patsopt: src2_patsopt ; cp -f src/CBOOT/patsopt bin/patsopt
+
+######
+
+utl_atscc: ; make -C utils/atscc patscc
+bin_patscc: utl_atscc ; cp -f utils/atscc/patscc bin/patscc
+
+######
+
+ccomp/atslib/lib/libatslib.a: ; make -C ccomp/atslib atslib
+
+######
+
+RMF=rm -f
+RMRF=rm -rf
+
+######
+
+clean::
+
+######
+
+cleanall:: clean
+
+cleanall:: ; $(RMF) config*
+cleanall:: ; $(RMF) stamp-h1
+cleanall:: ; $(RMF) aclocal.m4
+cleanall:: ; $(RMF) missing
+cleanall:: ; $(RMF) install-sh
+cleanall:: ; $(RMRF) autom4te.cache
+cleanall:: ; $(RMF) bin/patscc
+cleanall:: ; $(RMF) bin/patsopt
+cleanall:: ; $(RMF) src/patsopt
+cleanall:: ; $(RMF) src/*.?ats
+cleanall:: ; $(RMF) src/*_?ats.c
+cleanall:: ; $(RMF) src/*_?ats.o
+cleanall:: ; $(RMF) src/Makefile
+cleanall:: ; make -C src/CBOOT cleanall
+cleanall:: ; $(RMF) src/CBOOT/pats*.cats
+cleanall:: ; $(RMF) src/CBOOT/pats*_?ats.c
+cleanall:: ; $(RMF) src/CBOOT/ccomp/runtime/ats*.h
+cleanall:: ; $(RMF) src/CBOOT/ccomp/runtime/ats*.c
+cleanall:: ; $(RMF) src/CBOOT/prelude/*_?ats.c
+cleanall:: ; $(RMF) src/CBOOT/prelude/CATS/*.cats
+cleanall:: ; $(RMF) src/CBOOT/libc/*_?ats.c
+cleanall:: ; $(RMF) src/CBOOT/libc/CATS/*.cats
+cleanall:: ; $(RMF) src/CBOOT/libc/sys/CATS/*.cats
+cleanall:: ; $(RMF) src/CBOOT/libats/*_?ats.c
+cleanall:: ; $(RMF) src/CBOOT/libats/CATS/*.cats
+cleanall:: ; $(RMF) src/CBOOT/libats/ngc/CATS/*.cats
+cleanall:: ; $(RMF) src/CBOOT/gcats1_all.cats
+cleanall:: ; $(RMF) src/CBOOT/ccomp/runtime/GCATS/*.?ats
+cleanall:: ; $(RMF) src/CBOOT/ccomp/runtime/GCATS/*_?ats.c
+
+cleanall:: ; $(RMF) ccomp/atslib/lib/*
+cleanall:: ; $(RMF) ccomp/atslib/lib64/*
+cleanall:: ; $(RMF) ccomp/atslib/output/*
+cleanall:: ; $(RMF) ccomp/atslib/Makefile
+cleanall:: ; $(RMF) ccomp/runtime/*
+cleanall:: ; $(RMF) utils/atscc/*
+cleanall:: ; $(RMF) prelude/*.?ats
+cleanall:: ; $(RMF) prelude/?ATS/*.?ats
+cleanall:: ; $(RMF) libc/?ATS/*.?ats
+cleanall:: ; $(RMF) libc/sys/?ATS/*.?ats
+cleanall:: ; $(RMF) libc/gdbm/?ATS/*.?ats
+cleanall:: ; $(RMF) libc/gdbm/?ATS/SHARE/*.?ats
+cleanall:: ; $(RMF) libats/?ATS/*.?ats
+cleanall:: ; $(RMF) libats/?ATS/SHARE/*.?ats
+cleanall:: ; $(RMF) libats/ML/?ATS/*.?ats
+cleanall:: ; $(RMF) contrib/atshwxi/intinf/?ATS/*.?ats
+cleanall:: ; $(RMF) contrib/atshwxi/testing/?ATS/*.?ats
+cleanall:: ; $(RMF) doc/EXAMPLE/INTRO/*
+cleanall:: ; $(RMF) doc/EXAMPLE/MISC/*
+cleanall:: ; $(RMF) doc/EXAMPLE/ATSLIB/*
+cleanall:: ; $(RMF) doc/EXAMPLE/PCPV/*
+
+######
+
+###### end of [Makefile.dist]
