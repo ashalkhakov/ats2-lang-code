@@ -1,0 +1,13 @@
+0.0.1
+
+<pre>
+
+September 2, 2013
+
+This is the first release of ATS2, the successor of the ATS programming
+language. The compiler for ATS2 is given the name ATS/Positats, or simply
+Postiats.
+
+The official website for ATS is: http://www.ats-lang.org
+
+</pre>
