@@ -25,8 +25,8 @@ case $prog in
     exec "$prefix/bin/$prog" "$@"
     ;;
   *)
-    echo "This is a script for patscc."
-    echo "The script should be named as [patscc]."
+    echo "This is a script for patsopt."
+    echo "The script should be symbolically named as [patsopt]."
     exit 1
     ;;
 esac
