@@ -17,12 +17,12 @@ all:: ccomp/atslib/lib/libatslib.a
 
 ######
 
-src_patsopt: ; make -C src patsopt
+src_patsopt: ; make -j4 -C src patsopt
 bin_patsopt: src_patsopt ; cp -f src/patsopt bin/patsopt
 
 ######
 
-src2_patsopt: ; make -C src/CBOOT patsopt
+src2_patsopt: ; make -j4 -C src/CBOOT patsopt
 bin2_patsopt: src2_patsopt ; cp -f src/CBOOT/patsopt bin/patsopt
 
 ######
