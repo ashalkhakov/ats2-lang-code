@@ -284,12 +284,12 @@ patsopt: \
 
 ######
 
-#   prelude_DATS_filebas_dats.o
 PRELUDE_OBJECTS := \
   prelude_basics_sta_sats.o \
   prelude_basics_dyn_sats.o \
   prelude_ats_main_prelude_dats.o \
   prelude_DATS_basics_dats.o \
+  prelude_DATS_filebas_dats.o \
   prelude_DATS_bool_dats.o \
   prelude_DATS_char_dats.o \
   prelude_DATS_float_dats.o \

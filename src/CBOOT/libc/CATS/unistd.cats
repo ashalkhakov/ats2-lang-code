@@ -85,7 +85,15 @@ atslib_strarr_get (
 
 /* ****** ****** */
 
+#ifdef __MINGW32__
+ATSinline()
+pid_t atslib_fork_err (void) {
+  errno = ENOSYS ;
+  return -1 ;
+}
+#else
 #define atslib_fork_err fork
+#endif /* end of [__MINGW32__] */
 
 /* ****** ****** */
 

@@ -64,7 +64,7 @@ ats_void_type
 atslib_fork_exec_cloptr_exn
   (ats_ptr_type f_child) {
   pid_t pid ;
-  pid = fork () ;
+  pid = atslib_fork_err () ;
 //
   if (pid < 0) {
     ats_exit_errmsg (errno, "exit(ATS): [fork] failed.\n") ;
@@ -81,14 +81,14 @@ atslib_fork_exec_cloptr_exn
 } /* end of [atslib_fork_exec_cloptr] */
 
 /* ****** ****** */
-
+#ifndef __MINGW32__
 ats_int_type
 atslib_fork_exec_and_wait_cloptr_exn
   (ats_ptr_type f_child) {
   pid_t pid ;
   int status ;
 //
-  pid = fork () ;
+  pid = atslib_fork_err () ;
 //
   if (pid < 0) {
     ats_exit_errmsg (errno, "exit(ATS): [fork] failed.\n") ;
@@ -106,7 +106,7 @@ atslib_fork_exec_and_wait_cloptr_exn
 //
   return 0 ; /* deadcode */
 } /* atslib_fork_exec_and_wait_cloptr_exn */
-
+#endif /* end of [!__MINGW32__] */
 
 
 #define atslib_GETCWD_BUFSZ 64
@@ -134,7 +134,9 @@ atslib_getcwd0 () {
 } // end of [atslib_getcwd0]
 
 
-
+#ifdef __MINGW32__
+// nop
+#else
 ats_int_type
 atslib_pipe (
   ats_ptr_type pfd1, ats_ptr_type pfd2
@@ -147,19 +149,21 @@ atslib_pipe (
   } // end of [if]
   return err ;
 } // end of [atslib_pipe]
-
+#endif /* end of [__MINGW32__] */
 
 //
 extern
 ats_size_type
 atspre_ptrarr_size (ats_ptr_type p0) ;
 //
+#ifndef __MINGW32__
 ats_ptr_type
 atslib_environ_get_arrsz
   (size_t *sizep) {
   *sizep = atspre_ptrarr_size (environ) ;
   return environ;
 } // end of [atslib_environ_get_arrsz]
+#endif /* end of [!__MINGW32__] */
 //
 
 /* type definitions */
