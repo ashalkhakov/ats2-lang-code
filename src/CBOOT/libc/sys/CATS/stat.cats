@@ -44,6 +44,14 @@ typedef struct stat ats_stat_type ;
 
 /* ****** ****** */
 
+#ifdef __MINGW32__
+#define S_IFLNK    0120000 /* Symbolic link */
+#define S_ISLNK(x) (((x) & S_IFMT) == S_IFLNK)
+#define S_ISSOCK(x) 0
+#endif /* end of [__MINGW32__] */
+
+/* ****** ****** */
+
 extern
 void perror (const char *msg) ; // declared in [stdio.h]
 

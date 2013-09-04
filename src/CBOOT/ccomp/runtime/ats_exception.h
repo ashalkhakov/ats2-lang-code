@@ -55,6 +55,13 @@
 #endif // end of [_XOPEN_SOURCE]
 #include <setjmp.h>
 
+#ifdef __MINGW32__
+typedef jmp_buf sigjmp_buf ;
+
+#define sigsetjmp(jbuf, flag) setjmp(jbuf)
+#define siglongjmp(jbuf, val) longjmp(jbuf, val)
+#endif // end of [__MINGW32__]
+
 /* ****** ****** */
 //
 // HX-2011-04-24: the function [alloca] is declared in

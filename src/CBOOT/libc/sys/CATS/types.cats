@@ -42,6 +42,19 @@
 #include <sys/types.h>
 
 /* ****** ****** */
+
+#ifdef __MINGW32__
+typedef int gid_t ;
+typedef int uid_t ;
+typedef unsigned long fsblkcnt_t ;
+typedef unsigned long fsfilcnt_t ;
+typedef long key_t ;
+typedef long suseconds_t ;
+typedef long blkcnt_t ;
+typedef long nlink_t ;
+#endif // end of [__MINGW32__]
+
+/* ****** ****** */
 //
 // typedef blksize_t ats_blksize_type ; // I/O block size
 //

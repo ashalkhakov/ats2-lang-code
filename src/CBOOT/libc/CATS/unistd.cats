@@ -40,7 +40,9 @@
 
 #include <errno.h>
 #include <sys/types.h>
+#ifndef __MINGW32__
 #include <sys/wait.h> // for [wait]
+#endif /* end of [!__MINGW32__] */
 #include <unistd.h>
 
 /* ****** ****** */

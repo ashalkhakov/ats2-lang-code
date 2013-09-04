@@ -49,8 +49,10 @@
 //
 // HX: functions declared in [unistd.h]
 //
+#ifndef __MINGW32__
 extern ssize_t read  (int fd, void *buf, size_t cnt) ;
 extern ssize_t write  (int fd, const void *buf, size_t cnt) ;
+#endif /* end of [__MINGW32__] */
 
 /* ****** ****** */
 //
@@ -212,14 +214,24 @@ atslib_fildes_write_substring_exn (
 
 ATSinline()
 ats_fcntlflag_type
-atslib_fcntl_getfl (ats_int_type fd) { return fcntl(fd, F_GETFL) ; }
+atslib_fcntl_getfl (ats_int_type fd) {
+#ifdef __MINGW32__
+  return -1 ;
+#else
+  return fcntl(fd, F_GETFL) ;
+#endif
+}
 
 ATSinline()
 ats_int_type
 atslib_fcntl_setfl (
   ats_int_type fd, ats_fcntlflag_type flag
 ) {
+#ifdef __MINGW32__
+  return -1 ;
+#else
   return fcntl(fd, F_SETFL, flag) ;
+#endif
 } // end of [atslib_fcntl_setfl]
 
 /* ****** ****** */

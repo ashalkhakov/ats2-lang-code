@@ -83,7 +83,23 @@ atspre_exit_prerrf(ats_int_type code, ats_ptr_type fmt, ...) ;
 
 /* ****** ****** */
 
+#if defined(__MINGW32__)
+#include <fcntl.h> /* O_RDWR, O_CREAT */
+ATSinline()
+int
+atslib_mkstemp(char *template) {
+  char *filename = mktemp(template) ;
+  if (filename == NULL) {
+    return -1 ;
+  } else {
+    return open(filename, O_RDWR | O_CREAT, 0600) ;
+  }
+} /* end of [atslib_mkstemp] */
+
+#else
 #define atslib_mkstemp mkstemp
+#endif /* end of [__MINGW32__] */
+
 #define atslib_mkdtemp mkdtemp
 
 /* ****** ****** */

@@ -3,28 +3,13 @@
 # for ATS/Postiats C-bootstrapping
 #
 ######
-#
-# CCOMP=gcc
-#
-######
 
-LIBGC :=
-gcats_o :=
+CCOMP=gcc
+LD=ld
 
 ######
-#
-# GCFLAG=-D_ATS_NGC
-# GCFLAG=-D_ATS_GCATS
-# GCFLAG=-D_ATS_GCBDW
-#
-######
 
-ifeq ($(GCFLAG),-D_ATS_GCBDW)
-  LIBGC := -lgc
-endif
-ifeq ($(GCFLAG),-D_ATS_GCATS)
-  gcats_o := gcats.o
-endif
+GCFLAGS=
 
 ######
 
@@ -289,8 +274,8 @@ OBJECTSstadyn := $(OBJECTSsta) $(OBJECTSdyn)
 #
 patsopt: \
   pats_main_dats.o $(OBJECTSstadyn) \
-  prelude_libats.o libc_libats.o libats_libats.o $(gcats_o) ; \
-  $(CCOMP) -O2 -I . $(GCFLAG) -o $@ ccomp/runtime/ats_prelude.c $^ -lgmp $(LIBGC)
+  prelude_libats.o libc_libats.o libats_libats.o ; \
+  $(CCOMP) -O2 -I . $(GCFLAGS) -o $@ ccomp/runtime/ats_prelude.c $^ -lgmp
 #
 ######
 
@@ -299,6 +284,7 @@ patsopt: \
 
 ######
 
+#   prelude_DATS_filebas_dats.o
 PRELUDE_OBJECTS := \
   prelude_basics_sta_sats.o \
   prelude_basics_dyn_sats.o \
@@ -315,7 +301,6 @@ PRELUDE_OBJECTS := \
   prelude_DATS_lazy_dats.o \
   prelude_DATS_lazy_vt_dats.o \
   prelude_DATS_printf_dats.o \
-  prelude_DATS_filebas_dats.o \
   prelude_DATS_list_dats.o \
   prelude_DATS_list_vt_dats.o \
   prelude_DATS_list0_dats.o \
@@ -329,7 +314,7 @@ PRELUDE_OBJECTS := \
   prelude_DATS_ptrarr_dats.o \
   prelude_DATS_unsafe_dats.o \
 
-prelude_libats.o: $(PRELUDE_OBJECTS) ; ld -r -o $@ $^
+prelude_libats.o: $(PRELUDE_OBJECTS) ; $(LD) -r -o $@ $^
 
 prelude_%.o: prelude/%.c ; $(CCOMP) -I . -I ./ccomp/runtime -c -o $@ $<
 
@@ -351,7 +336,7 @@ LIBC_OBJECTS := \
   libc_SATS_gmp_sats.o \
   libc_DATS_gmp_dats.o \
 
-libc_libats.o: $(LIBC_OBJECTS) ; ld -r -o $@ $^
+libc_libats.o: $(LIBC_OBJECTS) ; $(LD) -r -o $@ $^
 
 libc_%.o : libc/%.c ; $(CCOMP) -I . -I ./ccomp/runtime -c -o $@ $<
 
@@ -377,7 +362,7 @@ LIBATS_OBJECTS := \
   libats_ngc_SATS_deque_arr_sats.o \
   libats_ngc_DATS_deque_arr_dats.o \
 
-libats_libats.o: $(LIBATS_OBJECTS) ; ld -r -o $@ $^
+libats_libats.o: $(LIBATS_OBJECTS) ; $(LD) -r -o $@ $^
 
 libats_%.o : libats/%.c ; $(CCOMP) -I . -I ./ccomp/runtime -c -o $@ $<
 
@@ -385,10 +370,10 @@ libats_%.o : libats/%.c ; $(CCOMP) -I . -I ./ccomp/runtime -c -o $@ $<
 
 gcats.o: \
   gcats1_hats \
-  gcats1_all_cats.o ; ld -r -o $@ gcats1_all_cats.o
+  gcats1_all_cats.o ; $(LD) -r -o $@ gcats1_all_cats.o
 
 gcats1_hats: ; \
-  gcc -E -P -o gcats1.hats -x c ./ccomp/runtime/GCATS/gcats1_master.hats
+  $(CCOMP) -E -P -o gcats1.hats -x c ./ccomp/runtime/GCATS/gcats1_master.hats
 gcats1_all_cats.o: \
   gcats1_all.cats ; $(CCOMP) -O2 -I . -I ./ccomp/runtime -o $@ -c -x c $<
 
